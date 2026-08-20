@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ABC Signal Bot - XAUUSD & Forex</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+  <h1>📈 ABC + FIB + VOLUME Signal Scanner</h1>
+  <p>Formula: Target = B * C / A</p>
+
+  <form method="POST">
+    <select name="symbol" required>
+      <option value="XAUUSD=X">XAUUSD - Gold</option>
+      <option value="EURUSD=X">EURUSD</option>
+      <option value="GBPUSD=X">GBPUSD</option>
+      <option value="USDJPY=X">USDJPY</option>
+    </select>
+
+    <select name="timeframe" required>
+      <option value="15m">15 Minute</option>
+      <option value="1h">1 Hour</option>
+      <option value="4h">4 Hour</option>
+      <option value="1d">1 Day</option>
+    </select>
+    <button type="submit">Scan Now</button>
+  </form>
+
+  {% if result %}
+  <div class="card signal-{{result.Signal|lower}}">
+    {% if result.error %}
+      <h2 style="color:red">{{result.error}}</h2>
+    {% else %}
+      <h2>Signal: {{result.Signal}}</h2>
+      <p><b>Symbol:</b> {{result.symbol}} | <b>TF:</b> {{result.timeframe}} | <b>Time:</b> {{result.time}}</p>
+      <div class="grid">
+        <div>A: {{result.A}}</div>
+        <div>B: {{result.B}}</div>
+        <div>C: {{result.C}}</div>
+        <div>Support: {{result.Support}}</div>
+        <div>Resistance: {{result.Resistance}}</div>
+        <div>Target D: {{result.Target}}</div>
+      </div>
+      <p><b>Fib Zone:</b> {{result.Fib_Zone}}</p>
+      <p><b>Reasons:</b> {{result.Reasons|join(', ')}}</p>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+</body>
+  </html>
